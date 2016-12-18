@@ -10,13 +10,13 @@ Positions of houses and heaters you are given are non-negative and will not exce
 As long as a house is in the heaters' warm radius range, it can be warmed.
 All the heaters follow your radius standard and the warm radius will the same.
 
-Example 1:
+**Example 1:**
 Input: [1,2,3],[2]
 
 Output: 1
 Explanation: The only heater was placed in the position 2, and if we use the radius 1 standard, then all the houses can be warmed.
 
-Example 2:
+**Example 2:**
 Input: [1,2,3,4],[1,4]
 
 Output: 1
