@@ -1,21 +1,30 @@
-import java.util.HashMap;
-
 public class Solution {
     public RandomListNode copyRandomList(RandomListNode head) {
-        HashMap<RandomListNode, RandomListNode> mapping = new HashMap<RandomListNode, RandomListNode>();
+        if (head == null)
+            return null;
 
-        RandomListNode prev = new RandomListNode(0);
-        RandomListNode newHead = prev;
-        for (RandomListNode cur = head; cur != null; cur = cur.next) {
+        RandomListNode cur = head;
+        while (cur != null) {
             RandomListNode tmp = new RandomListNode(cur.label);
-            prev.next = tmp;
-            prev = tmp;
-            mapping.put(cur, tmp);
+            tmp.next = cur.next;
+            cur.next = tmp;
+            cur = tmp.next;
         }
-        newHead = newHead.next;
+        cur = head;
+        while (cur != null) {
+            if (cur.random != null)
+                cur.next.random = cur.random.next;
+            cur = cur.next.next;
+        }
 
-        for (RandomListNode cur = head, newCur = newHead; cur != null; cur = cur.next, newCur = newCur.next) {
-            newCur.random=mapping.get(cur.random);
+        RandomListNode newHead = head.next;
+        cur = head;
+        while (cur != null) {
+            RandomListNode tmp = cur.next;
+            cur.next = tmp.next;
+            if (tmp.next != null)
+                tmp.next = tmp.next.next;
+            cur = cur.next;
         }
 
         return newHead;
