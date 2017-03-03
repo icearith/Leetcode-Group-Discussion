@@ -1,4 +1,16 @@
-car name,miles/gallon,cylinders,displacement,horsepower,weight,acceleration,model year,origin
-"chevrolet chevelle malibu",18,8,307,130,3504,12,70,1
-"buick skylark 320",15,8,350,165,3693,11.5,70,1
-"plymouth satellite",18,8,318,150,3436,11,70,1
+problem,Arith,RobberPhex,Shisoft
+-,-,-,-
+9. Palindrome Number,✓,,
+475. Heaters,,,
+463. Island Perimeter,✓,,
+456. 132 Pattern,✓,,
+453. Minimum Moves to Equal Array Elements,✓,,✓
+440. K-th Smallest in Lexicographical Order,,,
+419. Battleships in a Board,,✓,✓
+409. Longest Palindrome,✓,,✓
+328. Odd Even Linked List,,✓,
+206. Reverse Linked List,,✓,
+203. Remove Linked List Elements,,✓,
+175. Combine Two Tables,,✓,
+146. LRU Cache,✓,✓,
+138. Copy List with Random Pointer,✓,✓,
