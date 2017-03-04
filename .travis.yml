@@ -8,7 +8,6 @@ script:
     - cd docs
     - python generate_report.py
 
-
 deploy:
     provider: pages
     skip_cleanup: true
