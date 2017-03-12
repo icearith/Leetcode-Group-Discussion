@@ -7,9 +7,10 @@ public class Solution {
         RandomListNode newHead = null;
         RandomListNode indicator = newHead;
 
-        HashMap<Integer, List<RandomListNode>> randomMapping = new HashMap<>();
-        // label to node
-        HashMap<Integer, RandomListNode> labelMapping = new HashMap<>();
+        // random nodes mapping
+        HashMap<RandomListNode, List<RandomListNode>> randomMapping = new HashMap<>();
+        // origin node to new node
+        HashMap<RandomListNode, RandomListNode> nodeMapping = new HashMap<>();
 
         do {
             // copy the value first
@@ -22,10 +23,10 @@ public class Solution {
             }
 
             // add itself to label mapping
-            labelMapping.put(indicator.label, indicator);
+            nodeMapping.put(head, indicator);
 
             // clear random list for itself
-            List<RandomListNode> itsList = randomMapping.get(indicator.label);
+            List<RandomListNode> itsList = randomMapping.get(head);
             if (itsList != null) {
                 for (RandomListNode node : itsList) {
                     node.random = indicator;
@@ -35,20 +36,19 @@ public class Solution {
 
             // handle it's random
             if (head.random != null) {
-                Integer randomLabel = head.random.label;
-                RandomListNode randomNode = labelMapping.get(randomLabel);
+                RandomListNode randomNode = nodeMapping.get(head.random);
                 // set random or cache it
                 if (randomNode != null) {
                     indicator.random = randomNode;
                 } else {
                     // add it self to random mapping
-                    List<RandomListNode> randomList = randomMapping.get(randomLabel);
+                    List<RandomListNode> randomList = randomMapping.get(head.random);
                     if (randomList != null) {
                         randomList.add(indicator);
                     } else {
                         randomList = new ArrayList<>();
                         randomList.add(indicator);
-                        randomMapping.put(randomLabel, randomList);
+                        randomMapping.put(head.random, randomList);
                     }
                 }
             }
