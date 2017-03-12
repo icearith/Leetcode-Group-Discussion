@@ -3,48 +3,60 @@ public class Solution {
         if (head == null) {
             return null;
         }
-        RandomListNode copyList = null;
 
-        RandomListNode originIndicator = head;
-        RandomListNode copyIndicator = null;
+        RandomListNode newHead = null;
+        RandomListNode indicator = newHead;
 
-        List<Integer> labelList = new ArrayList<>();
-        List<Integer> randomMappingList = new ArrayList<>();
-        List<RandomListNode> copiedNodes = new ArrayList<>();
+        HashMap<Integer, List<RandomListNode>> randomMapping = new HashMap<>();
+        // label to node
+        HashMap<Integer, RandomListNode> labelMapping = new HashMap<>();
 
-        // copy all the values first
         do {
-            if (originIndicator.random != null) {
-                randomMappingList.add(originIndicator.random.label);
+            // copy the value first
+            if (newHead == null) {
+                //first element
+                indicator = newHead = new RandomListNode(head.label);
             } else {
-                randomMappingList.add(null);
+                indicator.next = new RandomListNode(head.label);
+                indicator = indicator.next;
             }
 
-            if (copyIndicator == null) {
-                copyList = copyIndicator = new RandomListNode(originIndicator.label);
-            } else {
-                copyIndicator.next = new RandomListNode(originIndicator.label);
-                copyIndicator = copyIndicator.next;
+            // add itself to label mapping
+            labelMapping.put(indicator.label, indicator);
+
+            // clear random list for itself
+            List<RandomListNode> itsList = randomMapping.get(indicator.label);
+            if (itsList != null) {
+                for (RandomListNode node : itsList) {
+                    node.random = indicator;
+                }
+                itsList.clear();
             }
 
-            labelList.add(originIndicator.label);
-            copiedNodes.add(copyIndicator);
-
-            originIndicator = originIndicator.next;
-        } while(originIndicator != null);
-
-        // set all the correct random value
-        copyIndicator = copyList;
-        for (int i = 0; i < copiedNodes.size(); i++) {
-            Integer randomLabel = randomMappingList.get(i);
-            if (randomLabel == null) {
-                continue;
+            // handle it's random
+            if (head.random != null) {
+                Integer randomLabel = head.random.label;
+                RandomListNode randomNode = labelMapping.get(randomLabel);
+                // set random or cache it
+                if (randomNode != null) {
+                    indicator.random = randomNode;
+                } else {
+                    // add it self to random mapping
+                    List<RandomListNode> randomList = randomMapping.get(randomLabel);
+                    if (randomList != null) {
+                        randomList.add(indicator);
+                    } else {
+                        randomList = new ArrayList<>();
+                        randomList.add(indicator);
+                        randomMapping.put(randomLabel, randomList);
+                    }
+                }
             }
-            int randomIndex = labelList.indexOf(randomLabel);
-            copiedNodes.get(i).random = copiedNodes.get(randomIndex);
-        }
 
-        return copyList;
+            head = head.next;
+        } while (head != null);
+
+        return newHead;
     }
 }
 
