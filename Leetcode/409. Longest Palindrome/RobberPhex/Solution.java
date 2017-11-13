@@ -1,19 +1,18 @@
 class Solution {
     public int longestPalindrome(String s) {
-        int[] count = new int[72];
+        int[] count = new int[59];
         char[] chars = s.toCharArray();
         for (char c : chars) {
-            count[c - 0x41]++;
+            count[c & 0x3f]++;
         }
         boolean odd = false;
         int maxLength = 0;
+
         for (int c : count) {
-            maxLength += (c >> 1 << 1);
-            if (!odd && (c & 1) == 1) {
-                odd = true;
-                maxLength += 1;
-            }
+            maxLength += (c & (~1));
+            odd = odd || (c & 1) == 1;
         }
+        maxLength += (odd ? 1 : 0);
         return maxLength;
     }
 
