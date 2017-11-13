@@ -1,10 +1,10 @@
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 class Solution {
 
     public List<Integer> lexicalOrder(int max) {
-        List<Integer> list = new LinkedList<Integer>();
+        List<Integer> list = new ArrayList<>(max);
         int cur = 1;
         for (int i = 0; i < max; i++) {
             list.add(cur);
