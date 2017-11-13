@@ -8,8 +8,10 @@ class Solution {
         int cur = 1;
         for (int i = 0; i < max; i++) {
             list.add(cur);
-            if (cur * 10 <= max)
-                cur *= 10;
+            int tmp = cur * 10;
+
+            if (tmp <= max)
+                cur = tmp;
             else {
                 if (cur >= max)
                     cur /= 10;
