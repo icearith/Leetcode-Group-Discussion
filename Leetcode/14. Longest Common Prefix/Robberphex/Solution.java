@@ -2,24 +2,15 @@ class Solution {
     public String longestCommonPrefix(String[] strs) {
         if (strs.length == 0)
             return "";
-        StringBuilder sb = new StringBuilder();
-        int curIndex = -1;
-        while (true) {
-            curIndex++;
-            boolean good = true;
-            String str1 = strs[0];
-            for (String str : strs) {
-                if (curIndex >= str.length() || str.charAt(curIndex) != str1.charAt(curIndex)) {
-                    good = false;
-                    break;
-                }
+        String prefix = strs[0];
+        for (int i = 1; i < strs.length; i++) {
+            while (strs[i].indexOf(prefix) != 0) {
+                prefix = prefix.substring(0, prefix.length() - 1);
+                if (prefix.isEmpty())
+                    return "";
             }
-            if (good)
-                sb.append(str1.charAt(curIndex));
-            else
-                break;
         }
-        return sb.toString();
+        return prefix;
     }
 
     public static void main(String[] args) {
