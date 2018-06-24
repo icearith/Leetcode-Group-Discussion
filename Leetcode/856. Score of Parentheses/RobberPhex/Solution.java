@@ -1,22 +1,18 @@
 class Solution {
     public int scoreOfParentheses(String S) {
-        int sum[] = new int[S.length() * 2];
+        int sum = 0;
 
         int curLevel = 0;
         for (int cur = 0; cur < S.length(); cur++) {
             if (S.charAt(cur) == '(') {
                 curLevel += 1;
-                sum[curLevel] = 0;
             } else {
-                if (sum[curLevel] == 0) {
-                    sum[curLevel - 1] += 1;
-                } else {
-                    sum[curLevel - 1] += sum[curLevel] * 2;
-                }
                 curLevel -= 1;
+                if (S.charAt(cur - 1) == '(')
+                    sum += 1 << curLevel;
             }
         }
-        return sum[0];
+        return sum;
     }
 
     public static void main(String[] args) {
