@@ -1,29 +1,24 @@
 class Solution {
     public int scoreOfParentheses(String S) {
-        return scoreOfParentheses(S, 0, S.length() - 1);
-    }
+        int openPos[] = new int[S.length() * 2];
+        int sum[] = new int[S.length() * 2];
 
-    public int scoreOfParentheses(String S, int start, int end) {
-        int depth = 0;
-        int res = 0;
-        for (int cur = start; cur <= end; cur++) {
+        int curLevel = 0;
+        for (int cur = 0; cur < S.length(); cur++) {
             if (S.charAt(cur) == '(') {
-                depth += 1;
+                curLevel += 1;
+                openPos[curLevel] = cur;
+                sum[curLevel]=0;
             } else {
-                if (S.charAt(cur) == ')') {
-                    depth -= 1;
-                    if (depth == 0) {
-                        if (cur - start == 1) {
-                            res += 1;
-                        } else {
-                            res += 2 * scoreOfParentheses(S, start + 1, cur - 1);
-                        }
-                        start = cur + 1;
-                    }
+                if (openPos[curLevel] + 1 == cur) {
+                    sum[curLevel - 1] += 1;
+                } else {
+                    sum[curLevel - 1] += sum[curLevel] * 2;
                 }
+                curLevel -= 1;
             }
         }
-        return res;
+        return sum[0];
     }
 
     public static void main(String[] args) {
@@ -37,5 +32,7 @@ class Solution {
         assert res == 2;
         res = solution.scoreOfParentheses("(()(()))");
         assert res == 6;
+        res = solution.scoreOfParentheses("(())(())");
+        assert res == 4;
     }
 }
