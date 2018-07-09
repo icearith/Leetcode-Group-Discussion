@@ -5,15 +5,15 @@ class Solution {
             x = -x;
             sign = -1;
         }
-        long r = 0;
+        int rev = 0;
         while (x > 0) {
-            r *= 10;
-            r += x % 10;
+            if (rev > Integer.MAX_VALUE / 10 || (rev == Integer.MAX_VALUE / 10 && x % 10 > 7))
+                return 0;
+            rev *= 10;
+            rev += x % 10;
             x /= 10;
         }
-        if (r > Integer.MAX_VALUE)
-            return 0;
-        return (int) (r * sign);
+        return rev * sign;
     }
 
     public static void main(String[] args) {
