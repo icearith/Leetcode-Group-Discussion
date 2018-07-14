@@ -1,34 +1,35 @@
 class Solution {
     public int myAtoi(String str) {
+        int cur = 0;
         int sign = 1;
         long res = 0;
-        boolean found = false;
-        for (int i = 0; i < str.length(); i++) {
-            if (str.charAt(i) == '-') {
-                if (found)
-                    break;
-                sign = -1;
-                found = true;
-            } else if (str.charAt(i) == '+') {
-                if (found)
-                    break;
-                sign = 1;
-                found = true;
-            } else if (Character.isSpaceChar(str.charAt(i))) {
-                if (found) {
-                    break;
-                }
-            } else if (!Character.isDigit(str.charAt(i)))
+        while (cur < str.length()) {
+            if (str.charAt(cur) != ' ')
                 break;
-            else if (Character.isDigit(str.charAt(i))) {
-                found = true;
-                res *= 10;
-                res += (str.charAt(i) - '0');
-                if (res * sign > Integer.MAX_VALUE)
+            cur++;
+        }
+        if (cur >= str.length())
+            return 0;
+        if (str.charAt(cur) == '-') {
+            sign = -1;
+            cur++;
+        } else if (str.charAt(cur) == '+') {
+            sign = 1;
+            cur++;
+        }
+        while (cur < str.length()) {
+            if (!Character.isDigit(str.charAt(cur)))
+                break;
+            res *= 10;
+            res += (str.charAt(cur) - '0');
+            if(res>Integer.MAX_VALUE){
+                if(sign>0){
                     return Integer.MAX_VALUE;
-                else if (res * sign < Integer.MIN_VALUE)
+                }else{
                     return Integer.MIN_VALUE;
+                }
             }
+            cur++;
         }
         return (int) (res * sign);
     }
