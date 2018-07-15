@@ -1,41 +1,31 @@
+import java.util.Arrays;
+
 class Solution {
-    public boolean reorderedPowerOf2(int N) {
-        String s = Integer.toString(N);
-        int[] A = new int[s.length()];
-        for (int i = 0; i < s.length(); i++)
-            A[i] = s.charAt(i) - '0';
-        return permutations(A, 0);
+    private static int[][] counts = new int[31][];
+
+    {
+        int cur = 1;
+        for (int i = 0; i < counts.length; i++) {
+            counts[i] = count(cur);
+            cur *= 2;
+        }
     }
 
-    public boolean permutations(int[] A, int start) {
-        if (start >= A.length)
-            return isPowerOf2(A);
-        for (int i = start; i < A.length; i++) {
-            int tmp;
-
-            tmp = A[i];
-            A[i] = A[start];
-            A[start] = tmp;
-
-            if (permutations(A, start + 1))
+    public boolean reorderedPowerOf2(int N) {
+        int[] countOfN = count(N);
+        for (int i = 0; i < counts.length; i++)
+            if (Arrays.equals(countOfN, counts[i]))
                 return true;
-
-            tmp = A[i];
-            A[i] = A[start];
-            A[start] = tmp;
-        }
         return false;
     }
 
-    public boolean isPowerOf2(int[] A) {
-        if (A[0] == 0)
-            return false;
-        int ans = 0;
-        for (int i = 0; i < A.length; i++) {
-            ans *= 10;
-            ans += A[i];
+    public int[] count(int N) {
+        int[] count = new int[10];
+        while (N > 0) {
+            count[N % 10]++;
+            N /= 10;
         }
-        return ((ans - 1) & ans) == 0;
+        return count;
     }
 
     public static void main(String[] args) {
