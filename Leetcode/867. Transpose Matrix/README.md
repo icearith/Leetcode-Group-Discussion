@@ -1,4 +1,4 @@
-# 868. Transpose Matrix
+# 867. Transpose Matrix
 
 Given a matrix A, return the transpose of A.
 
