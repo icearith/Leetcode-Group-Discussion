@@ -1,21 +1,12 @@
 class Solution {
     public int binaryGap(int N) {
-        int ans = 0, cur = 0;
-        boolean in = false;
-        while (N > 0) {
-            if (in) {
-                if (N % 2 == 0) {
-                    cur++;
-                } else {
-                    ans = Math.max(ans, cur + 1);
-                    in = false;
-                }
+        int ans = 0, last = -1;
+        for (int i = 0; i < 32; i++) {
+            if (((N >> i) & 1) > 0) {
+                if (last >= 0)
+                    ans = Math.max(ans, i - last);
+                last = i;
             }
-            if (N % 2 == 1) {
-                cur = 0;
-                in = true;
-            }
-            N /= 2;
         }
         return ans;
     }
