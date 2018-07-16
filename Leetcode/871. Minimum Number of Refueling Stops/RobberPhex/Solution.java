@@ -1,25 +1,29 @@
-// LeetCode 871
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
 class Solution {
     public int minRefuelStops(int target, int startFuel, int[][] stations) {
-        // dp[n]代表经过n次加油能达到的距离
-        int[] dp = new int[stations.length + 1];
-        dp[0] = startFuel;
-        // 此时dp的状态是没有加油站的状态
-        for (int i = 0; i < stations.length; i++) {
-            //让我们将第i个加油站加到其中
-            //就必须更新dp
-            for (int j = i; j >= 0; j--) {
-                // 从i到0，由于都多了一个加油站，可能能达到的最远距离会变大
-                if (dp[j] >= stations[i][0]) {
-                    dp[j + 1] = Math.max(dp[j + 1], dp[j] + stations[i][1]);
-                }
+        PriorityQueue<Integer> pq = new PriorityQueue<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2 - o1;
             }
+        });
+        int cur = 0;
+        int curDistance = startFuel;
+        int reFuel = 0;
+        while (curDistance < target) {
+            while (cur < stations.length && stations[cur][0] <= curDistance) {
+                pq.offer(stations[cur][1]);
+                cur++;
+            }
+            // 得到最大的加油站
+            if (pq.isEmpty())
+                return -1;
+            curDistance += pq.poll();
+            reFuel += 1;
         }
-        // 最后，找到到达target的，最小的i
-        for (int i = 0; i < dp.length; i++)
-            if (dp[i] >= target)
-                return i;
-        return -1;
+        return reFuel;
     }
 
     public static void main(String[] args) {
