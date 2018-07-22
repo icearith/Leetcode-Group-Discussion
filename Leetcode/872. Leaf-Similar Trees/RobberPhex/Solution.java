@@ -3,28 +3,37 @@ import java.util.List;
 
 class Solution {
     private List<TreeNode> list1 = new LinkedList<>();
-    private List<TreeNode> list2 = new LinkedList<>();
+    private int indexOfList1 = 0;
 
     public boolean leafSimilar(TreeNode root1, TreeNode root2) {
-        dfs(root1, list1);
-        dfs(root2, list2);
+        dfsWithSave(root1, list1);
+        return dfs(root2);
+    }
 
-        if (list1.size() != list2.size())
-            return false;
-        for (int i = 0; i < list1.size(); i++) {
-            if (list1.get(i).val != list2.get(i).val)
+    public boolean dfs(TreeNode node) {
+        if (node.left != null) {
+            if (!dfs(node.left))
                 return false;
+        }
+        if (node.right != null) {
+            if (!dfs(node.right))
+                return false;
+        }
+        if (node.left == null && node.right == null) {
+            if (node.val != list1.get(indexOfList1).val)
+                return false;
+            indexOfList1++;
+            return true;
         }
         return true;
     }
 
-    public void dfs(TreeNode node, List<TreeNode> list) {
-        // 如果当前是叶子节点
+    public void dfsWithSave(TreeNode node, List<TreeNode> list) {
         if (node.left != null) {
-            dfs(node.left, list);
+            dfsWithSave(node.left, list);
         }
         if (node.right != null) {
-            dfs(node.right, list);
+            dfsWithSave(node.right, list);
         }
         if (node.left == null && node.right == null) {
             list.add(node);
