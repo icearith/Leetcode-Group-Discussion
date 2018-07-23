@@ -1,12 +1,9 @@
-import java.util.HashSet;
-import java.util.Set;
-
 class Solution {
     public int findCircleNum(int[][] M) {
-        Set<Integer> set = new HashSet<>();
+        int[] set = new int[M.length];
         int ans = 0;
         for (int i = 0; i < M.length; i++) {
-            if (!set.contains(i)) {
+            if (set[i] == 0) {
                 dfs(M, set, i);
                 ans++;
             }
@@ -14,10 +11,10 @@ class Solution {
         return ans;
     }
 
-    private void dfs(int[][] M, Set<Integer> set, int start) {
-        set.add(start);
+    private void dfs(int[][] M, int[] set, int start) {
+        set[start] = 1;
         for (int i = 0; i < M.length; i++) {
-            if (M[start][i] != 0 && start != i && !set.contains(i)) {
+            if (M[start][i] != 0 && start != i && set[i] == 0) {
                 dfs(M, set, i);
             }
         }
