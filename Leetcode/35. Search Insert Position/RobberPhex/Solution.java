@@ -1,10 +1,10 @@
 class Solution {
     public int searchInsert(int[] nums, int target) {
-        int min = 0, max = nums.length - 1;
-        if (target > nums[nums.length - 1])
-            return nums.length;
+        int min = 0, max = nums.length;
         while (min < max) {
             int mid = (min + max) / 2;
+            if (nums[mid] == target)
+                return mid;
             if (nums[mid] < target) {
                 min = mid + 1;
             } else {
