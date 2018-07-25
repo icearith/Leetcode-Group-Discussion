@@ -4,9 +4,7 @@ class Solution {
         for (int i = 1; i < nums.length; i++) {
             if (nums[i] != nums[index]) {
                 index++;
-                if (index != i) {
-                    nums[index] = nums[i];
-                }
+                nums[index] = nums[i];
             }
         }
         return index + 1;
