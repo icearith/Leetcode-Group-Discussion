@@ -1,32 +1,26 @@
 class Solution {
     public double myPow(double x, int n) {
-        long pn = n;
-        int sign = x < 0 ? -1 : 1;
         double ans = 1;
-        if (pn < 0)
-            pn = -pn;
-        if (sign < 0) {
-            x = -x;
-            sign = pn % 2 != 0 ? -1 : 1;
+        long nn = n;
+        if (nn < 0) {
+            nn = -nn;
+            x = 1 / x;
         }
 
-        while (pn-- > 0) {
-            ans = ans * x;
-            if (Double.isInfinite(ans))
-                return 0;
-            if (ans >= 0 && ans <= Double.MIN_VALUE)
-                return 0;
-            if (ans - 1 <= Double.MIN_VALUE && 1 - ans <= Double.MIN_VALUE)
-                break;
+        double factor = x;
+        while (nn > 0) {
+            if (nn % 2 == 1) {
+                ans *= factor;
+            }
+            nn /= 2;
+            factor *= factor;
         }
-        if (n < 0)
-            ans = 1 / ans;
-        return ans * sign;
+        return ans;
     }
 
     public static void main(String[] args) {
         double res;
-        res = new Solution().myPow(2, -2147483648);
+        res = new Solution().myPow(2, 10);
         System.out.println(res);
     }
 }
