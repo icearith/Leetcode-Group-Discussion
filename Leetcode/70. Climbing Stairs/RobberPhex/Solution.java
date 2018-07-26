@@ -1,30 +1,21 @@
-import java.util.HashMap;
-import java.util.Map;
-
 class Solution {
-    public Map<Integer, Integer> map = new HashMap<>();
-
     public int climbStairs(int n) {
-        if (map.containsKey(n))
-            return map.get(n);
-        if (n <= 1) {
-            map.put(n, 1);
-            return 1;
+        int[] dp = new int[n + 2];
+        dp[1] = 1;
+        dp[2] = 2;
+        for (int i = 3; i <= n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
         }
-        int ans = climbStairs(n - 1);
-        if (n >= 2)
-            ans += climbStairs(n - 2);
-        map.put(n, ans);
-        return ans;
+        return dp[n];
     }
 
     public static void main(String[] args) {
         int res;
         Solution solution = new Solution();
 
-        res = solution.climbStairs(2);
-        System.out.println(res);
-        res = solution.climbStairs(44);
-        System.out.println(res);
+        for (int i = 1; i < 10; i++) {
+            res = solution.climbStairs(i);
+            System.out.println(i + "\t" + res);
+        }
     }
 }
