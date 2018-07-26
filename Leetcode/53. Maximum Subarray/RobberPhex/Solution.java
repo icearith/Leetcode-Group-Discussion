@@ -1,14 +1,10 @@
 class Solution {
     public int maxSubArray(int[] nums) {
-        int sum = nums[0];
-        int max = sum;
-        for (int i = 1; i < nums.length; i++) {
-            if (sum < 0) {
-                sum = nums[i];
-            } else {
-                sum += nums[i];
-            }
-            max = Math.max(max, sum);
+        int sum = 0, min = 0, max = Integer.MIN_VALUE;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            max = Math.max(max, sum - min);
+            min = Math.min(min, sum);
         }
         return max;
     }
@@ -17,7 +13,7 @@ class Solution {
         int res;
         Solution solution = new Solution();
 
-        res = solution.maxSubArray(new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4});
+        res = solution.maxSubArray(new int[]{-1});
         System.out.println(res);
     }
 }
