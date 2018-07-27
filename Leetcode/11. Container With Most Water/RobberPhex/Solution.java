@@ -5,9 +5,13 @@ class Solution {
         while (l < r) {
             max = Math.max(Math.min(height[l], height[r]) * (r - l), max);
             if (height[l] < height[r]) {
-                l++;
+                int val = height[l];
+                while (height[l] <= val && l < r)
+                    l++;
             } else {
-                r--;
+                int val = height[r];
+                while (height[r] <= val && l < r)
+                    r--;
             }
         }
         return max;
