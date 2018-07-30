@@ -1,25 +1,16 @@
 class Solution {
     public ListNode middleNode(ListNode head) {
-        ListNode cur = head;
-        int len = 0;
-        while (cur != null) {
-            cur = cur.next;
-            len++;
+        ListNode fast = head, slow = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
         }
-        int curLen = 0;
-        cur = head;
-        while (cur != null) {
-            if (curLen >= len / 2)
-                break;
-            cur = cur.next;
-            curLen++;
-        }
-        return cur;
+        return slow;
     }
 
     public static void main(String[] args) {
         ListNode head;
-        ListNode tmp=null;
+        ListNode tmp = null;
 
         head = new ListNode(6);
         tmp = head;
@@ -38,7 +29,7 @@ class Solution {
         head = new ListNode(1);
         head.next = tmp;
 
-        tmp = new Solution().middleNode(new ListNode(1));
+        tmp = new Solution().middleNode(head);
         System.out.println(tmp.val);
     }
 }
