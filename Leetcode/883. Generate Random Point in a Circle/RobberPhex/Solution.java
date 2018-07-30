@@ -9,14 +9,17 @@ class Solution {
     }
 
     public double[] randPoint() {
-        double angle = 2 * Math.PI * Math.random();
-        double len = radius * Math.sqrt(Math.random());
-        return new double[]{Math.cos(angle) * len + x_center, Math.sin(angle) * len + y_center};
+        double[] point = new double[2];
+        do {
+            point[0] = (2 * Math.random() - 1) * radius;
+            point[1] = (2 * Math.random() - 1) * radius;
+        } while (point[0] * point[0] + point[1] * point[1] > radius * radius);
+        return new double[]{point[0] + x_center, point[1] + y_center};
     }
 
     public static void main(String[] args) {
         double radius = 1;
-        double x_center = 0, y_center = 0;
+        double x_center = 1, y_center = 1;
         Solution obj = new Solution(radius, x_center, y_center);
         double[] param_1 = obj.randPoint();
         System.out.println("(" + param_1[0] + ", " + param_1[1] + ")");
