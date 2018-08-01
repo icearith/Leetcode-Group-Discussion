@@ -1,26 +1,14 @@
-import java.util.HashMap;
-import java.util.Map;
-
 class Solution {
-    private static int[] digits = new int[]{1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000};
-    private static String[] strs = new String[]{"I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M"};
-
     public String intToRoman(int num) {
+        int[] digits = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1,};
+        String[] strs = new String[]{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I",};
+
         StringBuilder sb = new StringBuilder();
-        int high = digits.length - 1;
-        while (num > 0) {
-            int l = 0, r = high;
-            while (l < r) {
-                int mid = (l + r + 1) / 2;
-                if (digits[mid] <= num) {
-                    l = mid;
-                } else {
-                    r = mid - 1;
-                }
+        for (int i = 0; i < digits.length; i++) {
+            while (num >= digits[i]) {
+                sb.append(strs[i]);
+                num -= digits[i];
             }
-            high = l;
-            sb.append(strs[l]);
-            num -= digits[l];
         }
         return sb.toString();
     }
