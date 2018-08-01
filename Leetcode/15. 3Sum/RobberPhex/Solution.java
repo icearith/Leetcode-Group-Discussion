@@ -9,32 +9,28 @@ class Solution {
         for (int i = 0; i < nums.length - 2; i++) {
             if (i > 0 && nums[i] == nums[i - 1])
                 continue;
-            for (int j = i + 1; j < nums.length - 1; j++) {
-                if (j > i + 1 && nums[j] == nums[j - 1])
-                    continue;
-                int target = 0 - nums[i] - nums[j];
-                int l = j + 1, h = nums.length - 1;
-                while (l < h) {
-                    int mid = (l + h) / 2;
-                    if (nums[mid] < target) {
-                        l = mid + 1;
-                    } else if (nums[mid] == target) {
-                        l = mid;
-                        break;
-                    } else {
-                        h = mid - 1;
-                    }
-                }
-                if (nums[l] == target) {
-                    List<Integer> tuple = new LinkedList<>();
-                    tuple.add(nums[i]);
-                    tuple.add(nums[j]);
-                    tuple.add(nums[l]);
-                    ans.add(tuple);
-                }
-            }
+            twoSum(nums, i + 1, -nums[i], ans);
         }
         return ans;
+    }
+
+    private void twoSum(int[] nums, int startIndex, int target, List<List<Integer>> ans) {
+        int low = startIndex, high = nums.length - 1;
+        while (low < high) {
+            if (nums[low] + nums[high] == target) {
+                ans.add(Arrays.asList(-target, nums[low], nums[high]));
+                low++;
+                high--;
+                while (low < high && nums[low] == nums[low - 1])
+                    low++;
+                while (low < high && nums[high] == nums[high + 1])
+                    high--;
+            } else if (nums[low] + nums[high] > target) {
+                high--;
+            } else {
+                low++;
+            }
+        }
     }
 
     public static void main(String[] args) {
