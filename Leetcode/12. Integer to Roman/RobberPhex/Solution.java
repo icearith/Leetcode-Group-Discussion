@@ -1,4 +1,5 @@
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 class Solution {
     private static Map<Integer, String> map;
@@ -27,12 +28,7 @@ class Solution {
         map.put(1000, "M");
         map.put(900, "CM");
 
-        keys = new int[map.size()];
-        int index = 0;
-        for (int key : map.keySet()) {
-            keys[index++] = key;
-        }
-        Arrays.sort(keys);
+        keys = new int[]{1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000};
     }
 
     public String intToRoman(int num) {
